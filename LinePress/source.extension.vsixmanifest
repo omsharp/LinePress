@@ -3,7 +3,10 @@
   <Metadata>
     <Identity Id="13d97f3e-75e2-4715-a444-715b5f39f0a4" Version="1.0" Language="en-US" Publisher="Omar Rwemi" />
     <DisplayName>Line Press</DisplayName>
-    <Description xml:space="preserve">Compresses empty lines.</Description>
+    <Description xml:space="preserve">View more code on your display by controlling the height of blank lines and curly braces.</Description>
+    <Icon>Resources\Icon.png</Icon>
+    <PreviewImage>Resources\PreviewImage.png</PreviewImage>
+    <Tags>compress, empty, line, curly, brace, more, space</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.Pro" />

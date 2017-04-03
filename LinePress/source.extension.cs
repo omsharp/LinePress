@@ -9,10 +9,10 @@ namespace LinePress
    {
       public const string Id = "13d97f3e-75e2-4715-a444-715b5f39f0a4";
       public const string Name = "Line Press";
-      public const string Description = @"Compresses empty lines.";
+      public const string Description = @"View more code on your display by controlling the height of blank lines and curly braces.";
       public const string Language = "en-US";
       public const string Version = "1.0";
       public const string Author = "Omar Rwemi";
-      public const string Tags = "";
+      public const string Tags = "compress, empty, line, curly, brace, more, space";
    }
 }
