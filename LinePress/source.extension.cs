@@ -7,7 +7,7 @@ namespace LinePress
 {
    static class Vsix
    {
-      public const string Id = "6502bb7-d41b-4f9c-bde8-191f04a6c84a";
+      public const string Id = "13d97f3e-75e2-4715-a444-715b5f39f0a4";
       public const string Name = "Line Press";
       public const string Description = @"Compresses empty lines.";
       public const string Language = "en-US";

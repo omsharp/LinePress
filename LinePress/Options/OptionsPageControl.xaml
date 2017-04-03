@@ -23,27 +23,27 @@
             <StackPanel Orientation="Horizontal">
 
                 <CheckBox x:Name="CompressEmptyLinesCheckBox"
-                              IsChecked="{Binding CompressEmptyLines, Mode=TwoWay}" 
-                              VerticalAlignment="Center"/>
+                          IsChecked="{Binding CompressEmptyLines, Mode=TwoWay}" 
+                          VerticalAlignment="Center"/>
 
                 <Label Content="Compress Empty Lines"
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" />
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" />
 
             </StackPanel>
 
             <!--! Empty Line Compression Rate -->
             <StackPanel Orientation="Horizontal" Margin="20 0">
                 <Slider x:Name="EmptyLineCompressionRateSlider"
-                            Minimum="5"
-                            Maximum="100"
-                            TickFrequency="5"
-                            IsSnapToTickEnabled="True"
-                            TickPlacement="Both"
-                            Width="240"
-                            Height="30"
-                            Value="{Binding EmptyLineCompressionRate, Mode=TwoWay}" 
-                            IsEnabled="{Binding ElementName=CompressEmptyLinesCheckBox, Path=IsChecked}"/>
+                        Minimum="5"
+                        Maximum="95"
+                        TickFrequency="5"
+                        IsSnapToTickEnabled="True"
+                        TickPlacement="Both"
+                        Width="240"
+                        Height="30"
+                        Value="{Binding EmptyLineCompressionRate, Mode=TwoWay}" 
+                        IsEnabled="{Binding ElementName=CompressEmptyLinesCheckBox, Path=IsChecked}"/>
 
                 <TextBlock Padding="5 2"
                            TextAlignment="Center"
@@ -63,27 +63,27 @@
             <StackPanel Orientation="Horizontal">
 
                 <CheckBox x:Name="CompressCurlyBracesCheckBox"
-                              IsChecked="{Binding CompressCurlyBraces, Mode=TwoWay}" 
-                              VerticalAlignment="Center"/>
+                          IsChecked="{Binding CompressCurlyBraces, Mode=TwoWay}" 
+                          VerticalAlignment="Center"/>
 
-                <Label Content="Compress Curly Braces"
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" />
+                <Label Content="Compress Lines With Nothing But Curly Braces"
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" />
 
             </StackPanel>
 
             <!--! Curly Brace Compression Rate -->
             <StackPanel Orientation="Horizontal" Margin="20 0">
                 <Slider x:Name="CurlyBraceCompressionRateSlider"
-                            Minimum="5"
-                            Maximum="100"
-                            TickFrequency="5"
-                            IsSnapToTickEnabled="True"
-                            TickPlacement="Both"
-                            Width="240"
-                            Height="30"
-                            Value="{Binding CurlyBraceCompressionRate, Mode=TwoWay}" 
-                            IsEnabled="{Binding ElementName=CompressCurlyBracesCheckBox, Path=IsChecked}"/>
+                        Minimum="5"
+                        Maximum="95"
+                        TickFrequency="5"
+                        IsSnapToTickEnabled="True"
+                        TickPlacement="Both"
+                        Width="240"
+                        Height="30"
+                        Value="{Binding CurlyBraceCompressionRate, Mode=TwoWay}" 
+                        IsEnabled="{Binding ElementName=CompressCurlyBracesCheckBox, Path=IsChecked}"/>
 
                 <TextBlock Padding="5 2"
                            TextAlignment="Center"
