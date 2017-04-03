@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="LinePress.Options.OptionsPageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LinePress.Options"
+             mc:Ignorable="d" 
+             d:DesignHeight="300"
+             Background="Transparent" 
+             Width="400">
+
+    <Grid Margin="16,30,0,0">
+
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--! Empty Lines Compression Controls-->
+        <StackPanel Grid.Row="0">
+
+            <!--! Enable/Disable Empty Line Compression -->
+            <StackPanel Orientation="Horizontal">
+
+                <CheckBox x:Name="CompressEmptyLinesCheckBox"
+                              IsChecked="{Binding CompressEmptyLines, Mode=TwoWay}" 
+                              VerticalAlignment="Center"/>
+
+                <Label Content="Compress Empty Lines"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" />
+
+            </StackPanel>
+
+            <!--! Empty Line Compression Rate -->
+            <StackPanel Orientation="Horizontal" Margin="20 0">
+                <Slider x:Name="EmptyLineCompressionRateSlider"
+                            Minimum="5"
+                            Maximum="100"
+                            TickFrequency="5"
+                            IsSnapToTickEnabled="True"
+                            TickPlacement="Both"
+                            Width="240"
+                            Height="30"
+                            Value="{Binding EmptyLineCompressionRate, Mode=TwoWay}" 
+                            IsEnabled="{Binding ElementName=CompressEmptyLinesCheckBox, Path=IsChecked}"/>
+
+                <TextBlock Padding="5 2"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center">
+                    
+                    <Run Text="{Binding Value, ElementName=EmptyLineCompressionRateSlider}" />
+                    <Run Text="%" />
+                </TextBlock>
+
+            </StackPanel>
+        </StackPanel>
+
+        <!--! Curly Braces Compression Controls-->
+        <StackPanel Grid.Row="1" Margin="0 25">
+
+            <!--! Enable/Disable Curly Braces Compression -->
+            <StackPanel Orientation="Horizontal">
+
+                <CheckBox x:Name="CompressCurlyBracesCheckBox"
+                              IsChecked="{Binding CompressCurlyBraces, Mode=TwoWay}" 
+                              VerticalAlignment="Center"/>
+
+                <Label Content="Compress Curly Braces"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" />
+
+            </StackPanel>
+
+            <!--! Curly Brace Compression Rate -->
+            <StackPanel Orientation="Horizontal" Margin="20 0">
+                <Slider x:Name="CurlyBraceCompressionRateSlider"
+                            Minimum="5"
+                            Maximum="100"
+                            TickFrequency="5"
+                            IsSnapToTickEnabled="True"
+                            TickPlacement="Both"
+                            Width="240"
+                            Height="30"
+                            Value="{Binding CurlyBraceCompressionRate, Mode=TwoWay}" 
+                            IsEnabled="{Binding ElementName=CompressCurlyBracesCheckBox, Path=IsChecked}"/>
+
+                <TextBlock Padding="5 2"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center">
+                    
+                    <Run Text="{Binding Value, ElementName=CurlyBraceCompressionRateSlider}" />
+                    <Run Text="%" />
+                </TextBlock>
+
+            </StackPanel>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
