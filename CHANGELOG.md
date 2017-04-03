@@ -8,4 +8,4 @@
 
 - [x] Initial release.
 - [x] Control the height of empty lines.
-- [x] Control the height of lines with nothing but curly braces.
+- [x] Control the height of lines that contains nothing but curly braces.
