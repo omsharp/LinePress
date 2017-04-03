@@ -4,10 +4,12 @@
 <br/>Reclaiming vertical space to display more code.
 
 <!-- Replace this badge with your own-->
-[![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/madskristensen/extensibilitytools)
+[![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/omsharp/linepress)
 
 <!-- Update the VS Gallery link after you upload the VSIX-->
 Download this extension from [Visual Studio Marketplace](https://visualstudiogallery.msdn.microsoft.com/[GuidFromGallery])
+
+Download the latest build from [VSIX Gallery](http://vsixgallery.com/extension/13d97f3e-75e2-4715-a444-715b5f39f0a4/)
 
 
 ---------------------------------------
