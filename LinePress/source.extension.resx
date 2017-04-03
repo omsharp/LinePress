@@ -121,7 +121,7 @@
     <value>Line Press</value>
   </data>
   <data name="112" xml:space="preserve">
-    <value>View more code on your display by controlling the height of blank lines and curly braces.</value>
+    <value>Line Press allows you to control the height of empty lines and curly braces. Reclaiming vertical space to display more code.</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="400" type="System.Resources.ResXFileRef, System.Windows.Forms">
