@@ -15,13 +15,7 @@ Download the latest build from [VSIX Gallery](http://vsixgallery.com/extension/1
 ---------------------------------------
 
 
-#### Without Line Press
-![Sample1](screenshots/Before.png)
-
-
-#### With Line Press
-![Sample1](screenshots/After.png)
-
+![Sample1](screenshots/compare.png) 
 
 #### Settings
 ![Sample1](screenshots/Settings.png)
