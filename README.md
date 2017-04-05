@@ -16,15 +16,18 @@ Download the latest build from [VSIX Gallery](http://vsixgallery.com/extension/1
 
 
 **More vertical space**
+
 ![Sample1](screenshots/compare.gif) 
 
 
+
 **More control**
+
 ![Sample1](screenshots/Settings.png)
 
 
 [change log](CHANGELOG.md).
 
-
+##
 **License**
 [Apache 2.0](LICENSE)
