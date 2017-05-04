@@ -34,7 +34,7 @@ namespace LinePress.Options
             settingsStore.SetInt32(COLLECTION_PATH, nameof(Settings.EmptyLineCompressionRate), settings.EmptyLineCompressionRate);
             settingsStore.SetBoolean(COLLECTION_PATH, nameof(Settings.CompressCurlyBraces), settings.CompressCurlyBraces);
             settingsStore.SetInt32(COLLECTION_PATH, nameof(Settings.CurlyBraceCompressionRate), settings.CurlyBraceCompressionRate);
-            
+
             CurrentSettings.Copy(settings);
 
             SettingsSaved?.Invoke(null, EventArgs.Empty);
@@ -44,7 +44,7 @@ namespace LinePress.Options
             Debug.Fail(ex.Message);
          }
       }
-      
+
       private static void Load()
       {
          try

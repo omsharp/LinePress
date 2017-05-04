@@ -69,7 +69,7 @@ namespace LinePress
                curlyBraceOnly = true;
             }
          }
-         
+
          if (allWhiteSpace && SettingsManager.CurrentSettings.CompressEmptyLines)
             return emptyLineTransform;
 

@@ -5,11 +5,11 @@ namespace LinePress.Options
 {
    public class Settings : INotifyPropertyChanged
    {
-      private bool compressEmptyLines = false;
-      private int emptyLineRate = 5;
+      private bool compressEmptyLines = true;
+      private int emptyLineRate = 15;
 
-      private bool compressCurlyBraces = false;
-      private int curlyBracesRate = 5;
+      private bool compressCurlyBraces = true;
+      private int curlyBracesRate = 15;
 
       public event PropertyChangedEventHandler PropertyChanged;
 
