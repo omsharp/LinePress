@@ -1,6 +1,11 @@
 
 ##Changelog
 
+### 1.1
+
+**2017-05-7
+
+- [x] Revamped the settings management code.
 
 ### 1.0
 
