@@ -1,19 +1,16 @@
 ﻿
 namespace LinePress.Options
 {
-    public partial class OptionsPageControl
-    {
-        public Settings Settings { get; } = new Settings();
+   public partial class OptionsPageControl
+   {
+      public LinePressSettings Settings { get; private set; } = new LinePressSettings();
 
-        public OptionsPageControl()
-        {
-            InitializeComponent();
-        }
+      public OptionsPageControl()
+      {
+         SettingsStore.LoadSettings(Settings);
+         DataContext = Settings;
 
-        public void Refresh()
-        {
-            Settings.Copy(SettingsManager.CurrentSettings);
-            DataContext = Settings;
-        }
-    }
+         InitializeComponent();
+      }
+   }
 }

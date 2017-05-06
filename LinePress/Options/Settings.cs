@@ -1,21 +1,29 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System;
 
 namespace LinePress.Options
 {
-   public class Settings : INotifyPropertyChanged
+   public class LinePressSettings : ISettings, INotifyPropertyChanged
    {
       private bool compressEmptyLines = true;
-      private int emptyLineRate = 15;
-
       private bool compressCurlyBraces = true;
+
+      private int emptyLineRate = 50;
       private int curlyBracesRate = 15;
 
-      public event PropertyChangedEventHandler PropertyChanged;
 
-      public double EmptyLineScale { get; private set; } = 0.5;
-      public double CurlyBraceScale { get; private set; } = 0.5;
+      public double EmptyLineScale { get; private set; } = 0.50;
+      public double CurlyBraceScale { get; private set; } = 0.75;
 
+      #region ISettings Members
+
+      public string Name => "LinePress";
+      
+      #endregion
+
+
+      [Setting]
       public bool CompressEmptyLines
       {
          get { return compressEmptyLines; }
@@ -28,6 +36,7 @@ namespace LinePress.Options
          }
       }
 
+      [Setting]
       public int EmptyLineCompressionRate
       {
          get { return emptyLineRate; }
@@ -42,6 +51,7 @@ namespace LinePress.Options
          }
       }
 
+      [Setting]
       public bool CompressCurlyBraces
       {
          get { return compressCurlyBraces; }
@@ -53,6 +63,7 @@ namespace LinePress.Options
          }
       }
 
+      [Setting]
       public int CurlyBraceCompressionRate
       {
          get { return curlyBracesRate; }
@@ -67,17 +78,16 @@ namespace LinePress.Options
          }
       }
 
-      public void Copy(Settings source)
-      {
-         CompressEmptyLines = source.CompressEmptyLines;
-         CompressCurlyBraces = source.CompressCurlyBraces;
-         EmptyLineCompressionRate = source.emptyLineRate;
-         CurlyBraceCompressionRate = source.CurlyBraceCompressionRate;
-      }
+
+      #region INotifyPropertyChanged Members
+
+      public event PropertyChangedEventHandler PropertyChanged;
 
       protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
       {
          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
       }
+
+      #endregion
    }
 }

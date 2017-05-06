@@ -12,27 +12,34 @@ namespace LinePress
       private LineTransform emptyLineTransform;
       private LineTransform curlyBraceTransform;
 
-      private readonly IWpfTextView view;
+      private readonly IWpfTextView textView;
+      private readonly LinePressSettings settings = new LinePressSettings();
 
       private LinePressTransformSource(IWpfTextView view)
       {
-         this.view = view;
-         SettingsManager.SettingsSaved += OnSettingsSaved;
+         textView = view;
+         SettingsStore.LoadSettings(settings);
+         SettingsStore.Saved += OnSettingsSaved;
          SetTransforms();
       }
 
-      private void OnSettingsSaved(object sender, EventArgs e)
+      private void OnSettingsSaved()
       {
+         SettingsStore.LoadSettings(settings);
+
          SetTransforms();
 
-         var firstLine = view.TextViewLines.FirstVisibleLine;
-         view.DisplayTextLineContainingBufferPosition(firstLine.Start, firstLine.Top - view.ViewportTop, ViewRelativePosition.Top);
+         var firstLine = textView.TextViewLines.FirstVisibleLine;
+
+         textView.DisplayTextLineContainingBufferPosition(firstLine.Start,
+                                                          firstLine.Top - textView.ViewportTop,
+                                                          ViewRelativePosition.Top);
       }
 
       private void SetTransforms()
       {
-         emptyLineTransform = new LineTransform(0.0, 0.0, SettingsManager.CurrentSettings.EmptyLineScale);
-         curlyBraceTransform = new LineTransform(0.0, 0.0, SettingsManager.CurrentSettings.CurlyBraceScale);
+         emptyLineTransform = new LineTransform(0.0, 0.0, settings.EmptyLineScale);
+         curlyBraceTransform = new LineTransform(0.0, 0.0, settings.CurlyBraceScale);
       }
 
       public static LinePressTransformSource Create(IWpfTextView view)
@@ -42,7 +49,7 @@ namespace LinePress
 
       public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
       {
-         if (!SettingsManager.CurrentSettings.CompressEmptyLines && !SettingsManager.CurrentSettings.CompressCurlyBraces)
+         if (!settings.CompressEmptyLines && !settings.CompressCurlyBraces)
             return defaultTransform;
 
          if (line.Length > 100 || line.End > line.Start.GetContainingLine().End ||
@@ -70,10 +77,10 @@ namespace LinePress
             }
          }
 
-         if (allWhiteSpace && SettingsManager.CurrentSettings.CompressEmptyLines)
+         if (allWhiteSpace && settings.CompressEmptyLines)
             return emptyLineTransform;
 
-         if (curlyBraceOnly && SettingsManager.CurrentSettings.CompressCurlyBraces)
+         if (curlyBraceOnly && settings.CompressCurlyBraces)
             return curlyBraceTransform;
 
          return defaultTransform;

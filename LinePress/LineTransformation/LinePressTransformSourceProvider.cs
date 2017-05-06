@@ -20,9 +20,9 @@ namespace LinePress
         {
             if (textView.Roles.Contains(DifferenceViewerRoles.LeftViewTextViewRole)
                 || textView.Roles.Contains(DifferenceViewerRoles.RightViewTextViewRole)
-                || textView.Roles.Contains("VSMERGEDEFAULT" /* MergeViewerRoles.VSMergeDefaultRole from TFS */))
+                || textView.Roles.Contains("VSMERGEDEFAULT"))
             {
-                // Ignore diff views
+                //! Ignore diff views
                 return null;
             }
 
