@@ -20,7 +20,7 @@ namespace LinePress.Options
       private static readonly WritableSettingsStore store
           = new ShellSettingsManager(ServiceProvider.GlobalProvider).GetWritableSettingsStore(SettingsScope.UserSettings);
 
-      public static event Action Saved;
+      public static event Action SettingsChanged;
 
       public static void SaveSettings(ISettings settings)
       {
@@ -58,7 +58,7 @@ namespace LinePress.Options
             }
 
             if (anySaved)
-               Saved?.Invoke();
+               SettingsChanged?.Invoke();
          }
          catch (Exception ex)
          {

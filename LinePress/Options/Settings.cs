@@ -19,6 +19,8 @@ namespace LinePress.Options
       private ObservableCollection<string> customTokens;
       #endregion
 
+      #region Constructors
+
       public LinePressSettings()
       {
          CustomTokens = new ObservableCollection<string> { "{", "}" };
@@ -27,20 +29,9 @@ namespace LinePress.Options
          DeleteTokenCommand = new RelayCommand<string>(CanDeleteToken, t => CustomTokens.Remove(t));
       }
 
-      public RelayCommand<string> InsertTokenCommand { get; private set; }
-      public RelayCommand<string> DeleteTokenCommand { get; private set; }
-
-      public ObservableCollection<string> CustomTokens
-      {
-         get { return customTokens; }
-         private set
-         {
-            SetField(ref customTokens, value);
-            customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
-         }
-      }
-
-      #region Settings to Save
+      #endregion
+      
+      #region Settings Properties
 
       [Setting]
       public bool FirstRun { get; set; } = true;
@@ -85,8 +76,25 @@ namespace LinePress.Options
       }
 
       #endregion
-      
-      #region Commands Predicates
+
+      #region Non-Settings Properties
+
+      public ObservableCollection<string> CustomTokens
+      {
+         get { return customTokens; }
+         private set
+         {
+            SetField(ref customTokens, value);
+            customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
+         }
+      }
+
+      #endregion
+
+      #region Commands
+
+      public RelayCommand<string> InsertTokenCommand { get; private set; }
+      public RelayCommand<string> DeleteTokenCommand { get; private set; }
 
       private bool CanInsertToken(string token) =>
          !string.IsNullOrWhiteSpace(token) && !CustomTokens.Contains(token);
@@ -106,7 +114,7 @@ namespace LinePress.Options
       private void SyncCustomTokensString()
       {
          var stringBuilder = new StringBuilder(customTokens[0]);
-         
+
          for (var i = 1; i < customTokens.Count; i++)
             stringBuilder.Append($" {customTokens[i]}");
 

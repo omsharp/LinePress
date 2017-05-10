@@ -18,11 +18,11 @@ namespace LinePress
       {
          textView = view;
          SettingsStore.LoadSettings(settings);
-         SettingsStore.Saved += OnSettingsSaved;
+         SettingsStore.SettingsChanged += OnSettingsChanged;
          SetTransforms();
       }
 
-      private void OnSettingsSaved()
+      private void OnSettingsChanged()
       {
          SettingsStore.LoadSettings(settings);
 
