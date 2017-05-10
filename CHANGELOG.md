@@ -1,6 +1,12 @@
 
 ##Changelog
 
+### 2.0
+
+**2017-05-10
+
+- [x] Custom compression tokens.
+
 ### 1.1
 
 **2017-05-7

@@ -11,7 +11,7 @@ namespace LinePress
       public const string Name = "Line Press";
       public const string Description = @"Line Press allows you to control the height of empty lines and curly braces. Reclaiming vertical space to display more code.";
       public const string Language = "en-US";
-      public const string Version = "1.1";
+      public const string Version = "2.0";
       public const string Author = "Omar Rwemi";
       public const string Tags = "compress, empty, line, curly, brace, height, more, vertical, space";
    }

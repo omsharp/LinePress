@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/LinePress/Options/Infrastructure
+/LinePress/Options/LinePressSettings.cs
