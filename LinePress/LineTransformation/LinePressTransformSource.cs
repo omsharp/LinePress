@@ -1,7 +1,6 @@
 ﻿using LinePress.Options;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
-using System;
 
 namespace LinePress
 {
@@ -10,7 +9,7 @@ namespace LinePress
       private readonly LineTransform defaultTransform = new LineTransform(0.0, 0.0, 1.0);
 
       private LineTransform emptyLineTransform;
-      private LineTransform curlyBraceTransform;
+      private LineTransform customTokensTransform;
 
       private readonly IWpfTextView textView;
       private readonly LinePressSettings settings = new LinePressSettings();
@@ -39,7 +38,7 @@ namespace LinePress
       private void SetTransforms()
       {
          emptyLineTransform = new LineTransform(0.0, 0.0, settings.EmptyLineScale);
-         curlyBraceTransform = new LineTransform(0.0, 0.0, settings.CurlyBraceScale);
+         customTokensTransform = new LineTransform(0.0, 0.0, settings.CustomTokensScale);
       }
 
       public static LinePressTransformSource Create(IWpfTextView view)
@@ -49,39 +48,28 @@ namespace LinePress
 
       public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
       {
-         if (!settings.CompressEmptyLines && !settings.CompressCurlyBraces)
+         if (!settings.CompressEmptyLines && !settings.CompressCustomTokens)
             return defaultTransform;
 
-         if (line.Length > 100 || line.End > line.Start.GetContainingLine().End ||
-             !line.IsFirstTextViewLineForSnapshotLine || !line.IsLastTextViewLineForSnapshotLine)
+         if (line.Length > 100
+            || line.End > line.Start.GetContainingLine().End
+            || !line.IsFirstTextViewLineForSnapshotLine
+            || !line.IsLastTextViewLineForSnapshotLine)
          {
-            // Long or wrapped lines -- even if they don't contain interesting characters -- get the default transform to avoid the cost of checking the entire line.
+            // Ignore long and wrapped lines.
             return defaultTransform;
          }
 
-         bool allWhiteSpace = true;
-         bool curlyBraceOnly = false;
+         var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
 
-         for (int i = line.Start; (i < line.End); ++i)
+         if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
          {
-            char c = line.Snapshot[i];
-
-            if (c != '{' && c != '}' && !char.IsWhiteSpace(c))
-            {
-               return defaultTransform;
-            }
-            else if (!char.IsWhiteSpace(c))
-            {
-               allWhiteSpace = false;
-               curlyBraceOnly = true;
-            }
-         }
-
-         if (allWhiteSpace && settings.CompressEmptyLines)
             return emptyLineTransform;
-
-         if (curlyBraceOnly && settings.CompressCurlyBraces)
-            return curlyBraceTransform;
+         }
+         else if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
+         {
+            return customTokensTransform;
+         }
 
          return defaultTransform;
       }

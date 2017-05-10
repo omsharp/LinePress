@@ -60,6 +60,7 @@
     <Compile Include="Options\OptionsPageControl.xaml.cs">
       <DependentUpon>OptionsPageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Options\RelayCommand.cs" />
     <Compile Include="Options\Settings.cs" />
     <Compile Include="Options\SettingsStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Microsoft.VisualStudio.Shell;
 using System.ComponentModel;
+using System;
 
 namespace LinePress.Options
 {
@@ -28,6 +29,13 @@ namespace LinePress.Options
             SettingsStore.SaveSettings(pageControl.Settings);
          
          base.OnApply(e);
+      }
+
+      protected override void OnClosed(EventArgs e)
+      {
+         pageControl.Clear();
+
+         base.OnClosed(e);
       }
    }
 }

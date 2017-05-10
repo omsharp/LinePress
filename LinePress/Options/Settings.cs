@@ -1,83 +1,125 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System;
+using System.Text;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace LinePress.Options
 {
    public class LinePressSettings : ISettings, INotifyPropertyChanged
    {
+      #region Fields
       private bool compressEmptyLines = true;
-      private bool compressCurlyBraces = true;
+      private bool compressCustomTokens = true;
 
-      private int emptyLineRate = 50;
-      private int curlyBracesRate = 15;
+      private double emptyLineRate = 0.5;
+      private double customTokensRate = 0.75;
 
-
-      public double EmptyLineScale { get; private set; } = 0.50;
-      public double CurlyBraceScale { get; private set; } = 0.75;
-
-      #region ISettings Members
-
-      public string Name => "LinePress";
-      
+      private string customTokensString = string.Empty;
+      private ObservableCollection<string> customTokens;
       #endregion
 
+      public LinePressSettings()
+      {
+         CustomTokens = new ObservableCollection<string> { "{", "}" };
+
+         InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t => CustomTokens.Add(t));
+         DeleteTokenCommand = new RelayCommand<string>(CanDeleteToken, t => CustomTokens.Remove(t));
+      }
+
+      public RelayCommand<string> InsertTokenCommand { get; private set; }
+      public RelayCommand<string> DeleteTokenCommand { get; private set; }
+
+      public ObservableCollection<string> CustomTokens
+      {
+         get { return customTokens; }
+         private set
+         {
+            SetField(ref customTokens, value);
+            customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
+         }
+      }
+
+      #region Settings to Save
+
+      [Setting]
+      public bool FirstRun { get; set; } = true;
 
       [Setting]
       public bool CompressEmptyLines
       {
          get { return compressEmptyLines; }
-         set
-         {
-            if (value == compressEmptyLines)
-               return;
-            compressEmptyLines = value;
-            OnPropertyChanged();
-         }
+         set { SetField(ref compressEmptyLines, value); }
       }
 
       [Setting]
-      public int EmptyLineCompressionRate
+      public double EmptyLineScale
       {
          get { return emptyLineRate; }
-         set
-         {
-            if (value == emptyLineRate)
-               return;
-
-            emptyLineRate = value;
-            EmptyLineScale = (100 - value) / 100d;
-            OnPropertyChanged();
-         }
+         set { SetField(ref emptyLineRate, value); }
       }
 
       [Setting]
-      public bool CompressCurlyBraces
+      public bool CompressCustomTokens
       {
-         get { return compressCurlyBraces; }
-         set
-         {
-            if (value == compressCurlyBraces) return;
-            compressCurlyBraces = value;
-            OnPropertyChanged();
-         }
+         get { return compressCustomTokens; }
+         set { SetField(ref compressCustomTokens, value); }
       }
 
       [Setting]
-      public int CurlyBraceCompressionRate
+      public double CustomTokensScale
       {
-         get { return curlyBracesRate; }
+         get { return customTokensRate; }
+         set { SetField(ref customTokensRate, value); }
+      }
+
+      [Setting]
+      public string CustomTokensString
+      {
+         get { return customTokensString; }
          set
          {
-            if (value == curlyBracesRate)
-               return;
-
-            curlyBracesRate = value;
-            CurlyBraceScale = (100 - value) / 100d;
-            OnPropertyChanged();
+            SetField(ref customTokensString, value);
+            SyncCustomTokensList();
          }
       }
 
+      #endregion
+      
+      #region Commands Predicates
+
+      private bool CanInsertToken(string token) =>
+         !string.IsNullOrWhiteSpace(token) && !CustomTokens.Contains(token);
+
+      private bool CanDeleteToken(string token) =>
+         !string.IsNullOrWhiteSpace(token) && CustomTokens.Contains(token);
+
+      #endregion
+
+      #region Helpers
+
+      private void SyncCustomTokensList()
+      {
+         CustomTokens = new ObservableCollection<string>(customTokensString.Split(null));
+      }
+
+      private void SyncCustomTokensString()
+      {
+         var stringBuilder = new StringBuilder(customTokens[0]);
+         
+         for (var i = 1; i < customTokens.Count; i++)
+            stringBuilder.Append($" {customTokens[i]}");
+
+         customTokensString = stringBuilder.ToString();
+      }
+
+      #endregion
+
+      #region ISettings Members
+
+      public string Name => "LinePress";
+
+      #endregion
 
       #region INotifyPropertyChanged Members
 
@@ -88,6 +130,15 @@ namespace LinePress.Options
          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
       }
 
+      private void SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+      {
+         if (EqualityComparer<T>.Default.Equals(field, value))
+            return;
+
+         field = value;
+
+         OnPropertyChanged(propertyName);
+      }
       #endregion
    }
 }
