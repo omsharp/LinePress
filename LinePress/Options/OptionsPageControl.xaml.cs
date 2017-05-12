@@ -5,7 +5,8 @@ namespace LinePress.Options
 {
    public partial class OptionsPageControl
    {
-      public LinePressSettings Settings { get; private set; } = new LinePressSettings();
+      public LinePressSettings Settings { get; private set; } 
+         = new LinePressSettings();
 
       public OptionsPageControl()
       {

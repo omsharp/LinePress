@@ -16,9 +16,7 @@ namespace LinePress.Options
 
       private int emptyLineScale = 50;
       private int customTokensScale = 25;
-
-      private string customTokensString;
-
+      
       private ObservableCollection<string> customTokens
          = new ObservableCollection<string> { "{", "}" };
 
@@ -34,9 +32,6 @@ namespace LinePress.Options
 
       public LinePressSettings()
       {
-         // make sure customTokensString is always synced with customTokens collection
-         customTokens.CollectionChanged += (s, e) => SyncCustomTokensString();
-
          InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t =>
          {
             CustomTokens.Add(t);
@@ -84,12 +79,8 @@ namespace LinePress.Options
       [Setting]
       public string CustomTokensString
       {
-         get { return customTokensString; }
-         set
-         {
-            SetField(ref customTokensString, value);
-            SyncCustomTokensList();
-         }
+         get { return ConvertTokensListToString(); }
+         set { BuildTokensListFromString(value); }
       }
 
       #endregion
@@ -115,20 +106,25 @@ namespace LinePress.Options
 
       #region Helpers
 
-      private void SyncCustomTokensList()
+      private void BuildTokensListFromString(string str)
       {
-         customTokens = new ObservableCollection<string>(customTokensString.Split(null));
-         customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
+         customTokens.Clear();
+
+         foreach (var token in str.Split(null))
+            customTokens.Add(token);
       }
 
-      private void SyncCustomTokensString()
+      private string ConvertTokensListToString()
       {
          var stringBuilder = new StringBuilder(customTokens[0]);
 
          for (var i = 1; i < customTokens.Count; i++)
-            stringBuilder.Append($" {customTokens[i]}");
-
-         customTokensString = stringBuilder.ToString();
+         {
+            stringBuilder.Append(' ');
+            stringBuilder.Append(customTokens[i]);
+         }
+         
+         return stringBuilder.ToString();
       }
 
       #endregion
