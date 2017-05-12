@@ -1,6 +1,7 @@
 # Line Press
 
-Have the best of both worlds. More code lines while keep enjoying your comfortable whitespace.
+Have the best of both worlds. More code lines on screen 
+without giving up your comfortable whitespace.
 
 <!-- Replace this badge with your own-->
 [![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/omsharp/linepress)

@@ -1,11 +1,17 @@
 
 ##Changelog
 
+### 2.2
+
+**2017-05-13
+
+- [x] Sleek UI.
+
 ### 2.0
 
 **2017-05-10
 
-- [x] Custom compression tokens.
+- [x] Add the ability to compress lines with a given content.
 
 ### 1.1
 
