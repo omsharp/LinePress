@@ -3,15 +3,12 @@
    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-   xmlns:local="clr-namespace:LinePress.Options"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
    Width="400"
    Height="340"
    mc:Ignorable="d">
 
    <UserControl.Resources>
-
-      <local:CompressionScaleToSliderValueConverter x:Key="ScaleConverter" />
 
       <!--! Transparent Button Style-->
       <Style x:Key="TransparentButton" TargetType="Button">
@@ -216,7 +213,7 @@
                      Minimum="5"
                      TickFrequency="5"
                      TickPlacement="Both"
-                     Value="{Binding EmptyLineScale, Mode=TwoWay, Converter={StaticResource ScaleConverter}}" />
+                     Value="{Binding EmptyLineScale, Mode=TwoWay}" />
 
                   <TextBlock
                      Padding="5,2"
@@ -332,7 +329,7 @@
                      Minimum="5"
                      TickFrequency="5"
                      TickPlacement="Both"
-                     Value="{Binding CustomTokensScale, Mode=TwoWay, Converter={StaticResource ScaleConverter}}" />
+                     Value="{Binding CustomTokensScale, Mode=TwoWay}" />
 
                   <TextBlock Padding="5,2" VerticalAlignment="Center">
 

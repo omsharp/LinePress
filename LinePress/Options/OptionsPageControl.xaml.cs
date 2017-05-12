@@ -29,17 +29,4 @@ namespace LinePress.Options
          NewTokenTextBox.Text = string.Empty;
       }
    }
-
-   public class CompressionScaleToSliderValueConverter : IValueConverter
-   {
-      public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-      {
-         return 100 - (double.Parse(value.ToString()) * 100);
-      }
-
-      public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-      {
-         return (100 - int.Parse(value.ToString())) / 100;
-      }
-   }
 }

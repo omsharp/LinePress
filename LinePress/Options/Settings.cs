@@ -12,20 +12,21 @@ namespace LinePress.Options
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
 
-      private double emptyLineRate = 0.5;
-      private double customTokensRate = 0.75;
+      private int emptyLineRate = 50;
+      private int customTokensRate = 25;
 
-      private string customTokensString = string.Empty;
-      private ObservableCollection<string> customTokens;
+      private string customTokensString = "{ }";
+
+      private ObservableCollection<string> customTokens
+         = new ObservableCollection<string> { "{", "}" };
       #endregion
 
       #region Constructors
 
       public LinePressSettings()
       {
-         CustomTokens = new ObservableCollection<string> { "{", "}" };
-
          InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t => CustomTokens.Add(t));
+
          DeleteTokenCommand = new RelayCommand<string>(CanDeleteToken, t => CustomTokens.Remove(t));
       }
 
@@ -44,7 +45,7 @@ namespace LinePress.Options
       }
 
       [Setting]
-      public double EmptyLineScale
+      public int EmptyLineScale
       {
          get { return emptyLineRate; }
          set { SetField(ref emptyLineRate, value); }
@@ -58,7 +59,7 @@ namespace LinePress.Options
       }
 
       [Setting]
-      public double CustomTokensScale
+      public int CustomTokensScale
       {
          get { return customTokensRate; }
          set { SetField(ref customTokensRate, value); }
