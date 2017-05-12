@@ -20,6 +20,8 @@ namespace LinePress.Options
 
       protected override void OnActivate(CancelEventArgs e)
       {
+         SettingsStore.LoadSettings(pageControl.Settings);
+
          base.OnActivate(e);
       }
 

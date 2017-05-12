@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 
 namespace LinePress.Options
@@ -13,8 +9,6 @@ namespace LinePress.Options
 
       public OptionsPageControl()
       {
-         SettingsStore.LoadSettings(Settings);
-
          Settings.TokenAdded += Clear;
 
          DataContext = Settings;

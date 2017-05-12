@@ -16,16 +16,25 @@ namespace LinePress.Options
       private int emptyLineRate = 50;
       private int customTokensRate = 25;
 
-      private string customTokensString = "{ }";
+      private string customTokensString;
 
       private ObservableCollection<string> customTokens
          = new ObservableCollection<string> { "{", "}" };
+      #endregion
+
+      #region Events
+
+      public event Action TokenAdded;
+
       #endregion
 
       #region Constructors
 
       public LinePressSettings()
       {
+         // make sure customTokensString is always synced with customTokens collection
+         customTokens.CollectionChanged += (s, e) => SyncCustomTokensString();
+
          InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t =>
          {
             CustomTokens.Add(t);
@@ -85,21 +94,7 @@ namespace LinePress.Options
 
       #region Non-Settings Properties
 
-      public ObservableCollection<string> CustomTokens
-      {
-         get { return customTokens; }
-         private set
-         {
-            SetField(ref customTokens, value);
-            customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
-         }
-      }
-
-      #endregion
-
-      #region Events
-
-      public event Action TokenAdded;
+      public ObservableCollection<string> CustomTokens => customTokens;
 
       #endregion
 
@@ -120,7 +115,8 @@ namespace LinePress.Options
 
       private void SyncCustomTokensList()
       {
-         CustomTokens = new ObservableCollection<string>(customTokensString.Split(null));
+         customTokens = new ObservableCollection<string>(customTokensString.Split(null));
+         customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
       }
 
       private void SyncCustomTokensString()
