@@ -1,7 +1,6 @@
 # Line Press
 
-**Line Press** is a Visual Studio extension that allows you to control the height of empty lines and curly braces. 
-<br/>Reclaiming vertical space to display more code.
+Have the best of both worlds. More code lines while keep enjoying your comfortable whitespace.
 
 <!-- Replace this badge with your own-->
 [![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/omsharp/linepress)
@@ -15,18 +14,18 @@ Download the latest build from [VSIX Gallery](http://vsixgallery.com/extension/1
 ---------------------------------------
 
 
-**More vertical space**
+**More code. No cram.**
 
 ![Sample1](screenshots/compare.gif) 
 
 
 
-**More control**
+**Have control on what lines to compress.**
 
 ![Sample1](screenshots/Settings.png)
 
 
-[change log](CHANGELOG.md).
+[change log](CHANGELOG.md)
 
 ##
 **License**
