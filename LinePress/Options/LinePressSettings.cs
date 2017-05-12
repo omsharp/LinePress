@@ -46,9 +46,6 @@ namespace LinePress.Options
       #region Settings Properties
 
       [Setting]
-      public bool FirstRun { get; set; } = true;
-
-      [Setting]
       public bool CompressEmptyLines
       {
          get { return compressEmptyLines; }
