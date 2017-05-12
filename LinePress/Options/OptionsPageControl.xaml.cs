@@ -14,6 +14,9 @@ namespace LinePress.Options
       public OptionsPageControl()
       {
          SettingsStore.LoadSettings(Settings);
+
+         Settings.TokenAdded += Clear;
+
          DataContext = Settings;
 
          InitializeComponent();

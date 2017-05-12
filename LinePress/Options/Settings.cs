@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System;
 
 namespace LinePress.Options
 {
@@ -25,13 +26,17 @@ namespace LinePress.Options
 
       public LinePressSettings()
       {
-         InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t => CustomTokens.Add(t));
+         InsertTokenCommand = new RelayCommand<string>(CanInsertToken, t =>
+         {
+            CustomTokens.Add(t);
+            TokenAdded?.Invoke();
+         });
 
          DeleteTokenCommand = new RelayCommand<string>(CanDeleteToken, t => CustomTokens.Remove(t));
       }
 
       #endregion
-      
+
       #region Settings Properties
 
       [Setting]
@@ -89,6 +94,12 @@ namespace LinePress.Options
             customTokens.CollectionChanged += (o, e) => SyncCustomTokensString();
          }
       }
+
+      #endregion
+
+      #region Events
+
+      public event Action TokenAdded;
 
       #endregion
 
