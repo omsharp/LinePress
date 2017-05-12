@@ -6,7 +6,7 @@ namespace LinePress
 {
    public class LinePressTransformSource : ILineTransformSource
    {
-      private readonly LineTransform defaultTransform = new LineTransform(0.0, 0.0, 1.0);
+      private readonly LineTransform defaultTransform = new LineTransform(0d, 0d, 1d);
 
       private LineTransform emptyLineTransform;
       private LineTransform customTokensTransform;
@@ -37,8 +37,8 @@ namespace LinePress
 
       private void SetTransforms()
       {
-         emptyLineTransform = new LineTransform(0.0, 0.0, (100d - settings.EmptyLineScale) / 100d);
-         customTokensTransform = new LineTransform(0.0, 0.0, (100d - settings.CustomTokensScale) / 100d);
+         emptyLineTransform = new LineTransform(0d, 0d, (100d - settings.EmptyLineScale) / 100d);
+         customTokensTransform = new LineTransform(0d, 0d, (100d - settings.CustomTokensScale) / 100d);
       }
 
       public static LinePressTransformSource Create(IWpfTextView view)
@@ -61,12 +61,12 @@ namespace LinePress
          }
 
          var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
-
-         if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
+         
+         if (string.IsNullOrWhiteSpace(lineText) && settings.CompressEmptyLines)
          {
             return emptyLineTransform;
          }
-         else if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
+         else if (settings.CustomTokens.Contains(lineText) && settings.CompressCustomTokens)
          {
             return customTokensTransform;
          }

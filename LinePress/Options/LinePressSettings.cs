@@ -10,16 +10,18 @@ namespace LinePress.Options
    public class LinePressSettings : ISettings, INotifyPropertyChanged
    {
       #region Fields
+
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
 
-      private int emptyLineRate = 50;
-      private int customTokensRate = 25;
+      private int emptyLineScale = 50;
+      private int customTokensScale = 25;
 
       private string customTokensString;
 
       private ObservableCollection<string> customTokens
          = new ObservableCollection<string> { "{", "}" };
+
       #endregion
 
       #region Events
@@ -61,8 +63,8 @@ namespace LinePress.Options
       [Setting]
       public int EmptyLineScale
       {
-         get { return emptyLineRate; }
-         set { SetField(ref emptyLineRate, value); }
+         get { return emptyLineScale; }
+         set { SetField(ref emptyLineScale, value); }
       }
 
       [Setting]
@@ -75,8 +77,8 @@ namespace LinePress.Options
       [Setting]
       public int CustomTokensScale
       {
-         get { return customTokensRate; }
-         set { SetField(ref customTokensRate, value); }
+         get { return customTokensScale; }
+         set { SetField(ref customTokensScale, value); }
       }
 
       [Setting]
@@ -133,7 +135,7 @@ namespace LinePress.Options
 
       #region ISettings Members
 
-      public string Name => "LinePress";
+      public string Key => "LinePress";
 
       #endregion
 
