@@ -26,5 +26,10 @@ namespace LinePress.Options
       {
          NewTokenTextBox.Text = string.Empty;
       }
+
+      private void NewTokenTextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+      {
+         e.Handled = e.Command == ApplicationCommands.Paste;
+      }
    }
 }

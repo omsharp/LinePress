@@ -4,11 +4,134 @@
    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-   Width="400"
-   Height="340"
+   Width="393"
+   Height="420"
    mc:Ignorable="d">
 
    <UserControl.Resources>
+
+      <!--! Dim TextBlock when disabled-->
+      <Style x:Key="DisabledTextBlock" TargetType="TextBlock">
+         <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+               <Setter Property="Foreground" Value="Gray" />
+            </Trigger>
+         </Style.Triggers>
+      </Style>
+
+      <!--! Animated Toggle Switch Style-->
+      <Style x:Key="AnimatedSwitch" TargetType="{x:Type ToggleButton}">
+         <Setter Property="Foreground" Value="Black" />
+         <Setter Property="Background" Value="#FAFAFB" />
+         <Setter Property="BorderBrush" Value="#EAEAEB" />
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="ToggleButton">
+                  <Viewbox Stretch="Uniform">
+                     <Canvas
+                        Name="Layer_1"
+                        Canvas.Left="10"
+                        Canvas.Top="0"
+                        Width="20"
+                        Height="20">
+                        <Ellipse
+                           Canvas.Left="0"
+                           Width="20"
+                           Height="20"
+                           Fill="{TemplateBinding Background}"
+                           Stroke="{TemplateBinding BorderBrush}"
+                           StrokeThickness="0.5" />
+                        <Ellipse
+                           Canvas.Left="15"
+                           Width="20"
+                           Height="20"
+                           Fill="{TemplateBinding Background}"
+                           Stroke="{TemplateBinding BorderBrush}"
+                           StrokeThickness="0.5" />
+                        <Border
+                           Name="rect416927"
+                           Canvas.Left="10"
+                           Width="15"
+                           Height="20"
+                           Background="{TemplateBinding Background}"
+                           BorderBrush="{TemplateBinding BorderBrush}"
+                           BorderThickness="0,0.5,0,0.5" />
+                        <Ellipse
+                           x:Name="ellipse"
+                           Canvas.Left="0"
+                           Width="20"
+                           Height="20"
+                           Fill="White"
+                           Stroke="{TemplateBinding BorderBrush}"
+                           StrokeThickness="0.3">
+                           <Ellipse.RenderTransform>
+                              <TranslateTransform X="0" Y="0" />
+                           </Ellipse.RenderTransform>
+                           <Ellipse.BitmapEffect>
+                              <DropShadowBitmapEffect
+                                 Direction="270"
+                                 ShadowDepth="0.7"
+                                 Softness="0.1"
+                                 Color="#BBBBBB" />
+                           </Ellipse.BitmapEffect>
+                        </Ellipse>
+                     </Canvas>
+                  </Viewbox>
+                  <ControlTemplate.Triggers>
+                     <Trigger Property="IsChecked" Value="False">
+                        <Trigger.Setters>
+                           <Setter Property="Background" Value="#f94939" />
+                        </Trigger.Setters>
+                     </Trigger>
+                     <Trigger Property="IsChecked" Value="True">
+                        <Trigger.EnterActions>
+                           <BeginStoryboard>
+                              <Storyboard>
+                                 <ColorAnimation
+                                    Storyboard.TargetProperty="Background.Color"
+                                    To="#52D468"
+                                    Duration="0:0:0.2" />
+                                 <ColorAnimation
+                                    Storyboard.TargetProperty="BorderBrush.Color"
+                                    To="#41C955"
+                                    Duration="0:0:0.2" />
+                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="0" Value="0" />
+                                    <SplineDoubleKeyFrame
+                                       KeySpline="0, 1, 0.6, 1"
+                                       KeyTime="0:0:0.4"
+                                       Value="15" />
+                                 </DoubleAnimationUsingKeyFrames>
+                              </Storyboard>
+                           </BeginStoryboard>
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                           <BeginStoryboard>
+                              <Storyboard>
+                                 <ColorAnimation
+                                    Storyboard.TargetProperty="Background.Color"
+                                    To="#f94939"
+                                    Duration="0:0:0.2" />
+                                 <ColorAnimation
+                                    Storyboard.TargetProperty="BorderBrush.Color"
+                                    To="#f94939"
+                                    Duration="0:0:0.2" />
+                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="0" Value="15" />
+                                    <SplineDoubleKeyFrame
+                                       KeySpline="0, 0.5, 0.5, 1"
+                                       KeyTime="0:0:0.3"
+                                       Value="0" />
+                                 </DoubleAnimationUsingKeyFrames>
+                              </Storyboard>
+                           </BeginStoryboard>
+                        </Trigger.ExitActions>
+                     </Trigger>
+                  </ControlTemplate.Triggers>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
 
       <!--! Transparent Button Style-->
       <Style x:Key="TransparentButton" TargetType="Button">
@@ -168,178 +291,181 @@
 
    </UserControl.Resources>
 
-   <Grid Margin="10,20,0,0">
+   <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <Grid Margin="10,20,0,0">
 
-      <Grid.RowDefinitions>
-         <RowDefinition Height="Auto" />
-         <RowDefinition Height="Auto" />
-         <RowDefinition Height="140" />
-         <RowDefinition Height="91" />
-      </Grid.RowDefinitions>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+         </Grid.RowDefinitions>
 
-      <StackPanel>
-         <GroupBox
-            Width="370"
-            Padding="5,5,0,0"
-            HorizontalAlignment="Left"
-            BorderThickness="1.5">
+         <StackPanel>
+
             <!--! Empty Lines Compression Controls-->
-            <StackPanel Grid.Row="0" Margin="0,5,0,0">
+            <GroupBox
+               Grid.Row="0"
+               Width="370"
+               Padding="5,5,0,0"
+               HorizontalAlignment="Left"
+               BorderThickness="1.5"
+               Header="Compress Empty Lines">
 
-               <!--! Enable/Disable Empty Line Compression-->
-               <StackPanel Orientation="Horizontal">
+               <StackPanel Grid.Row="0" Margin="0,5,0,0">
 
-                  <CheckBox
-                     x:Name="CompressEmptyLinesCheckBox"
-                     VerticalAlignment="Center"
-                     IsChecked="{Binding CompressEmptyLines, Mode=TwoWay}" />
-
-                  <Label
+                  <!--! Enable/Disable Empty Line Compression-->
+                  <ToggleButton
+                     x:Name="CompressEmptyLinesToggle"
+                     Height="20"
                      HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     Content="Compress empty lines." />
+                     IsChecked="{Binding CompressEmptyLines, Mode=TwoWay}"
+                     Style="{StaticResource AnimatedSwitch}" />
 
+
+                  <!--! Empty Line Compression Rate-->
+                  <StackPanel
+                     Margin="20,10"
+                     IsEnabled="{Binding ElementName=CompressEmptyLinesToggle, Path=IsChecked}"
+                     Orientation="Horizontal">
+                     <Slider
+                        x:Name="EmptyLineCompressionRateSlider"
+                        Width="240"
+                        Height="30"
+                        IsSnapToTickEnabled="True"
+                        Maximum="95"
+                        Minimum="5"
+                        TickFrequency="5"
+                        TickPlacement="Both"
+                        Value="{Binding EmptyLineScale, Mode=TwoWay}" />
+
+                     <TextBlock
+                        Padding="5,2"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource DisabledTextBlock}"
+                        TextAlignment="Center">
+
+                        <Run Text="{Binding Value, ElementName=EmptyLineCompressionRateSlider}" /><Run Text="% Smaller" />
+                     </TextBlock>
+
+                  </StackPanel>
                </StackPanel>
-
-               <!--! Empty Line Compression Rate-->
-               <StackPanel Margin="20,0" Orientation="Horizontal">
-                  <Slider
-                     x:Name="EmptyLineCompressionRateSlider"
-                     Width="240"
-                     Height="30"
-                     IsEnabled="{Binding ElementName=CompressEmptyLinesCheckBox, Path=IsChecked}"
-                     IsSnapToTickEnabled="True"
-                     Maximum="95"
-                     Minimum="5"
-                     TickFrequency="5"
-                     TickPlacement="Both"
-                     Value="{Binding EmptyLineScale, Mode=TwoWay}" />
-
-                  <TextBlock
-                     Padding="5,2"
-                     VerticalAlignment="Center"
-                     TextAlignment="Center">
-
-                     <Run Text="{Binding Value, ElementName=EmptyLineCompressionRateSlider}" /><Run Text="% Smaller" />
-                  </TextBlock>
-
-               </StackPanel>
-            </StackPanel>
-         </GroupBox>
+            </GroupBox>
 
 
-         <!--! Custom Tokens Compression Controls-->
-         <GroupBox
-            Width="370"
-            Margin="0,5,0,0"
-            Padding="5,5,0,0"
-            HorizontalAlignment="Left"
-            BorderThickness="1.5">
-            <StackPanel
-               Grid.Row="2"
-               Grid.RowSpan="2"
-               Margin="0,5,0,0">
+            <!--! Custom Tokens Compression Controls-->
+            <GroupBox
+               Grid.Row="1"
+               Width="370"
+               Margin="0,10,0,0"
+               Padding="5,5,0,0"
+               HorizontalAlignment="Left"
+               BorderThickness="1.5"
+               Header="Compress Lines With Specific Content">
+               <StackPanel Grid.Row="1" Margin="0,5,0,0">
 
-               <!--! Enable/Disable Custom Tokens Compression-->
-               <StackPanel Orientation="Horizontal">
-
-                  <CheckBox
-                     x:Name="CompressCustomTokensCheckBox"
-                     VerticalAlignment="Center"
+                  <!--! Enable/Disable Custom Tokens Compression-->
+                  <ToggleButton
+                     x:Name="CompressCustomTokensToggle"
+                     Height="20"
+                     HorizontalAlignment="Left"
                      IsChecked="{Binding CompressCustomTokens, Mode=TwoWay}"
+                     Style="{StaticResource AnimatedSwitch}"
                      ToolTip="Customize what lines you want to compress." />
 
-                  <Label
+
+                  <!--! Custom Tokens List-->
+                  <StackPanel
+                     Width="265"
+                     Margin="20,5,0,10"
                      HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     Content="Compress lines that contains nothing but one of these tokens." />
+                     IsEnabled="{Binding IsChecked, ElementName=CompressCustomTokensToggle}">
+
+                     <!--! New Token-->
+                     <Label Content="Enter line content:" Foreground="#545353" />
+
+                     <Border
+                        Margin="0,0,0,4"
+                        BorderBrush="LightGray"
+                        BorderThickness="1">
+                        <Grid Height="30">
+                           <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="50" />
+                           </Grid.ColumnDefinitions>
+
+
+                           <TextBox
+                              x:Name="NewTokenTextBox"
+                              Grid.Column="0"
+                              Padding="5,0"
+                              VerticalContentAlignment="Center"
+                              BorderThickness="0"
+                              CommandManager.PreviewExecuted="NewTokenTextBox_PreviewExecuted"
+                              ContextMenu="{x:Null}"
+                              FontSize="15"
+                              FontWeight="SemiBold"
+                              MaxLength="27"
+                              PreviewKeyDown="NewTokenTextBox_PreviewKeyDown"
+                              ToolTip="Insert your token here." />
+
+
+                           <Button
+                              x:Name="AddNewTokenButton"
+                              Grid.Column="1"
+                              Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.InsertTokenCommand}"
+                              CommandParameter="{Binding ElementName=NewTokenTextBox, Path=Text}"
+                              Content="{StaticResource AddButtonIcon}"
+                              Cursor="Hand"
+                              Style="{StaticResource AddButton}" />
+
+                        </Grid>
+                     </Border>
+
+                     <!--! Tokens List-->
+                     <Border
+                        Background="White"
+                        BorderBrush="LightGray"
+                        BorderThickness="1">
+
+                        <ScrollViewer Height="100" VerticalScrollBarVisibility="Visible">
+
+                           <ItemsControl
+                              x:Name="CustomTokensList"
+                              ItemTemplate="{StaticResource TokenListItemTemplate}"
+                              ItemsSource="{Binding CustomTokens}"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible" />
+                        </ScrollViewer>
+                     </Border>
+                  </StackPanel>
+
+                  <!--! Custom Tokens Compression Scale-->
+                  <StackPanel
+                     Margin="20,5,20,10"
+                     IsEnabled="{Binding IsChecked, ElementName=CompressCustomTokensToggle}"
+                     Orientation="Horizontal">
+                     <Slider
+                        x:Name="CustomTokensCompressionRateSlider"
+                        Width="240"
+                        Height="30"
+                        IsSnapToTickEnabled="True"
+                        Maximum="95"
+                        Minimum="5"
+                        TickFrequency="5"
+                        TickPlacement="Both"
+                        Value="{Binding CustomTokensScale, Mode=TwoWay}" />
+
+                     <TextBlock
+                        Padding="5,2"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource DisabledTextBlock}">
+                        <Run Text="{Binding Value, ElementName=CustomTokensCompressionRateSlider}" /><Run Text="% Smaller" />
+                     </TextBlock>
+                  </StackPanel>
 
                </StackPanel>
+            </GroupBox>
 
-               <!--! Custom Tokens List-->
-               <StackPanel
-                  Width="265"
-                  Margin="20,5,0,10"
-                  HorizontalAlignment="Left"
-                  IsEnabled="{Binding IsChecked, ElementName=CompressCustomTokensCheckBox}">
-
-                  <!--! New Token-->
-                  <Border
-                     Margin="0,0,0,4"
-                     BorderBrush="LightGray"
-                     BorderThickness="1">
-                     <Grid Height="30">
-                        <Grid.ColumnDefinitions>
-                           <ColumnDefinition Width="*" />
-                           <ColumnDefinition Width="50" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBox
-                           x:Name="NewTokenTextBox"
-                           Grid.Column="0"
-                           Padding="5,0"
-                           VerticalContentAlignment="Center"
-                           BorderThickness="0"
-                           FontSize="15"
-                           FontWeight="SemiBold"
-                           MaxLength="27"
-                           PreviewKeyDown="NewTokenTextBox_PreviewKeyDown"
-                           ToolTip="Insert your token here." />
-
-
-                        <Button
-                           x:Name="AddNewTokenButton"
-                           Grid.Column="1"
-                           Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.InsertTokenCommand}"
-                           CommandParameter="{Binding ElementName=NewTokenTextBox, Path=Text}"
-                           Content="{StaticResource AddButtonIcon}"
-                           Cursor="Hand"
-                           Style="{StaticResource AddButton}" />
-
-                     </Grid>
-                  </Border>
-
-                  <!--! Added Tokens List-->
-                  <Border
-                     Background="White"
-                     BorderBrush="LightGray"
-                     BorderThickness="1">
-
-                     <ScrollViewer Height="100" VerticalScrollBarVisibility="Visible">
-
-                        <ItemsControl
-                           x:Name="CustomTokensList"
-                           ItemTemplate="{StaticResource TokenListItemTemplate}"
-                           ItemsSource="{Binding CustomTokens}"
-                           ScrollViewer.VerticalScrollBarVisibility="Visible" />
-                     </ScrollViewer>
-                  </Border>
-               </StackPanel>
-
-
-               <!--! Custom Tokens Compression Rate-->
-               <StackPanel Margin="20,0" Orientation="Horizontal">
-                  <Slider
-                     x:Name="CustomTokensCompressionRateSlider"
-                     Width="240"
-                     Height="30"
-                     IsEnabled="{Binding ElementName=CompressCustomTokensCheckBox, Path=IsChecked}"
-                     IsSnapToTickEnabled="True"
-                     Maximum="95"
-                     Minimum="5"
-                     TickFrequency="5"
-                     TickPlacement="Both"
-                     Value="{Binding CustomTokensScale, Mode=TwoWay}" />
-
-                  <TextBlock Padding="5,2" VerticalAlignment="Center">
-
-                     <Run Text="{Binding Value, ElementName=CustomTokensCompressionRateSlider}" /><Run Text="% Smaller" />
-                  </TextBlock>
-               </StackPanel>
-
-            </StackPanel>
-         </GroupBox>
-      </StackPanel>
-   </Grid>
+         </StackPanel>
+      </Grid>
+   </ScrollViewer>
 
 </UserControl>
