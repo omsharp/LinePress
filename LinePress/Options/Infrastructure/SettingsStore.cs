@@ -83,8 +83,8 @@ namespace LinePress.Options
                {
                   if (store.PropertyExists(settings.Key, prop.Name))
                   {
-                     double.TryParse(store.GetString(settings.Key, prop.Name), out double value);
-                     prop.SetValue(settings, value);
+                     if (double.TryParse(store.GetString(settings.Key, prop.Name), out double value))
+                        prop.SetValue(settings, value);
                   }
                }
                else if (prop.PropertyType == typeof(string))
