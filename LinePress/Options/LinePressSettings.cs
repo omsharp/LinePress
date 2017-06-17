@@ -94,10 +94,10 @@ namespace LinePress.Options
       public RelayCommand<string> DeleteTokenCommand { get; private set; }
 
       private bool CanInsertToken(string token) =>
-         !string.IsNullOrWhiteSpace(token) && !CustomTokens.Contains(token);
+         !token.IsNullOrWhiteSpace() && !CustomTokens.Contains(token);
 
       private bool CanDeleteToken(string token) =>
-         !string.IsNullOrWhiteSpace(token) && CustomTokens.Contains(token);
+         !token.IsNullOrWhiteSpace() && CustomTokens.Contains(token);
 
       #endregion
 
