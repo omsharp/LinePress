@@ -297,13 +297,54 @@
          <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+	        <RowDefinition Height="Auto" />
          </Grid.RowDefinitions>
 
          <StackPanel>
 
+	         <!--! Line Spacing-->
+	         <GroupBox
+		         Grid.Row="0"
+		         Width="370"
+		         Padding="5,5,0,0"
+		         HorizontalAlignment="Left"
+		         BorderThickness="1.5"
+		         Header="Default Line Spacing">
+
+		         <StackPanel Grid.Row="0" Margin="0,5,0,0">
+
+			         <!--! Amount of Line Spacing -->
+			         <StackPanel
+				         Margin="20,10"
+				         Orientation="Horizontal">
+				         <Slider
+					         x:Name="LineSpacingAmountSlider"
+					         Width="240"
+					         Height="30"
+					         IsSnapToTickEnabled="True"
+					         Maximum="1"
+					         Minimum="0"
+					         TickFrequency="0.05"
+					         TickPlacement="Both"
+					         Value="{Binding LineSpacing, Mode=TwoWay}" />
+
+				         <TextBlock
+					         Padding="5,2"
+					         VerticalAlignment="Center"
+					         Style="{StaticResource DisabledTextBlock}"
+					         TextAlignment="Center">
+
+					         <Run Text="{Binding Value, ElementName=LineSpacingAmountSlider}" /><Run Text="%" />
+				         </TextBlock>
+
+			         </StackPanel>
+		         </StackPanel>
+	         </GroupBox>
+
+
             <!--! Empty Lines Compression Controls-->
             <GroupBox
-               Grid.Row="0"
+               Grid.Row="1"
                Width="370"
                Padding="5,5,0,0"
                HorizontalAlignment="Left"
@@ -353,7 +394,7 @@
 
             <!--! Custom Tokens Compression Controls-->
             <GroupBox
-               Grid.Row="1"
+               Grid.Row="2"
                Width="370"
                Margin="0,10,0,0"
                Padding="5,5,0,0"

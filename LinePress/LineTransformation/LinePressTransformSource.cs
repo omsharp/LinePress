@@ -6,7 +6,7 @@ namespace LinePress
 {
    public class LinePressTransformSource : ILineTransformSource
    {
-      private readonly LineTransform defaultTransform = new LineTransform(0d, 0d, 1d);
+      private LineTransform defaultTransform;
 
       private LineTransform emptyLineTransform;
       private LineTransform customTokensTransform;
@@ -37,8 +37,9 @@ namespace LinePress
 
       private void SetTransforms()
       {
-         emptyLineTransform = new LineTransform(0d, 0d, (100d - settings.EmptyLineScale) / 100d);
-         customTokensTransform = new LineTransform(0d, 0d, (100d - settings.CustomTokensScale) / 100d);
+         defaultTransform = new LineTransform(settings.TopSpace, settings.BottomSpace, 1d);
+         emptyLineTransform = new LineTransform(settings.TopSpace, settings.BottomSpace, (100d - settings.EmptyLineScale) / 100d);
+         customTokensTransform = new LineTransform(settings.TopSpace, settings.BottomSpace, (100d - settings.CustomTokensScale) / 100d);
       }
 
       public static LinePressTransformSource Create(IWpfTextView view)
