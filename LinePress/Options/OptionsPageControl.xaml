@@ -250,6 +250,7 @@
 							</TextBlock>
 
 						</StackPanel>
+            <CheckBox IsChecked="{Binding ApplySpacingToComments, Mode=TwoWay}" Content="Apply spacing to comments"/>
 					</StackPanel>
 				</GroupBox>
 

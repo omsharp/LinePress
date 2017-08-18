@@ -14,10 +14,9 @@ namespace LinePress.Options
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
 
-      // lineSpacing = topSpace + bottomSpace
-      private int lineSpacing = 0; 
-      //private double topSpace = 0;
-      //private double bottomSpace = 0;
+      private int lineSpacing = 0;
+       private bool applySpacingToComments = false;
+
       private int emptyLineScale = 50;
       private int customTokensScale = 25;
       
@@ -47,7 +46,7 @@ namespace LinePress.Options
 
         #endregion
 
-        #region Settings Properties
+      #region Settings Properties
 
       [Setting]
       public int LineSpacing
@@ -56,19 +55,12 @@ namespace LinePress.Options
          set { SetField(ref lineSpacing, value); }
       }
 
-      //[Setting]
-      //public double TopSpace
-      //{
-      //    get { return lineSpacing / 2; }
-      //    set { SetField(ref topSpace, value); }
-      //}
-
-      //[Setting]
-      //public double BottomSpace
-      //{
-      //   get { return lineSpacing / 2; }
-      //   set { SetField(ref bottomSpace, value); }
-      //}
+       [Setting]
+       public bool ApplySpacingToComments
+       {
+           get { return applySpacingToComments; }
+           set { SetField(ref applySpacingToComments, value); }
+       }
 
       [Setting]
       public bool CompressEmptyLines
