@@ -10,10 +10,8 @@ namespace LinePress
       private LineTransform defaultTransform;
       private LineTransform spacedTransform;
 
-      private LineTransform emptyLineTransform;
       private LineTransform spacedEmptyLineTransform;
 
-      private LineTransform customTokensTransform;
       private LineTransform spacedCustomTokensTransform;
 
       private readonly IWpfTextView textView;
@@ -45,9 +43,7 @@ namespace LinePress
          var bottomSpace = (double)settings.LineSpacing;
          defaultTransform = new LineTransform(0d, 0d, 1d);
          spacedTransform = new LineTransform(0d, bottomSpace, 1d);
-         emptyLineTransform = new LineTransform(0d, 0d, (100d - settings.EmptyLineScale) / 100d);
          spacedEmptyLineTransform = new LineTransform(0d, bottomSpace, (100d - settings.EmptyLineScale) / 100d);
-         customTokensTransform = new LineTransform(0d, 0d, (100d - settings.CustomTokensScale) / 100d);
          spacedCustomTokensTransform = new LineTransform(0d, bottomSpace, (100d - settings.CustomTokensScale) / 100d);
       }
 
