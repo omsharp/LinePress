@@ -41,10 +41,12 @@ namespace LinePress
 
       private void SetTransforms()
       {
-         var bottomSpace = settings.EmSpacingUsed 
-                ? settings.LineSpacing * textView.TextViewLines.FirstVisibleLine.TextHeight
-                : settings.LineSpacing;
          defaultTransform = new LineTransform(0d, 0d, 1d);
+         
+         var bottomSpace = settings.EmSpacingUsed 
+            ? settings.LineSpacing * textView?.TextViewLines?.FirstVisibleLine?.TextHeight ?? 10d
+            : settings.LineSpacing;
+
          spacedTransform = new LineTransform(0d, bottomSpace, 1d);
          emptyLineTransform = new LineTransform(0d, bottomSpace, (100d - settings.EmptyLineScale) / 100d);
          customTokensTransform = new LineTransform(0d, bottomSpace, (100d - settings.CustomTokensScale) / 100d);

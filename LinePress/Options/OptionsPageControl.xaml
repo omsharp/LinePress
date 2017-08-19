@@ -1,8 +1,9 @@
 ﻿<UserControl x:Class="LinePress.Options.OptionsPageControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Width="393"
-             Height="420" mc:Ignorable="d">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:LinePress.Options" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="393" Height="420" mc:Ignorable="d">
 
 	<UserControl.Resources>
+		<local:BoolInverterConverter x:Key="BoolInverterConverter" />
 
 		<!--  ! Dim TextBlock when disabled  -->
 		<Style x:Key="DisabledTextBlock" TargetType="TextBlock">
@@ -235,15 +236,21 @@
 
 					<StackPanel Grid.Row="0" Margin="0,5,0,0">
 						<StackPanel Margin="20,10" Orientation="Horizontal">
-							<RadioButton GroupName="Units" Content="pixel  " IsChecked="{Binding PixelSpacingUsed}" />
-							<RadioButton GroupName="Units" Content="em " IsChecked="{Binding EmSpacingUsed}" />
+							<TextBlock Text="Units: " />
+							<RadioButton Margin="10,0,0,0" Content="pixel  " GroupName="Units"
+							             IsChecked="{Binding EmSpacingUsed, Converter={StaticResource BoolInverterConverter}}" />
+							<RadioButton Content="em " GroupName="Units" IsChecked="{Binding EmSpacingUsed}" />
+							<CheckBox Margin="25,0,0,0" Content="Comments too" IsChecked="{Binding ApplySpacingToComments, Mode=TwoWay}" />
 						</StackPanel>
 
 						<!--  ! Amount of Line Spacing  -->
 						<StackPanel Margin="20,10" Orientation="Horizontal">
 							<Slider x:Name="LineSpacingAmountSlider" Width="240" Height="30"
-							        IsSnapToTickEnabled="True" Maximum="{Binding SpacingMaxValue, Mode=OneWay}" Minimum="0"
-							        TickFrequency="{Binding SpacingTickValue, Mode=OneWay}" TickPlacement="Both"
+							        IsSnapToTickEnabled="True"
+							        Maximum="{Binding SpacingMaxValue, Mode=OneWay}"
+							        Minimum="0"
+							        TickFrequency="{Binding SpacingTickValue, Mode=OneWay}"
+							        TickPlacement="Both"
 							        Value="{Binding LineSpacing, Mode=TwoWay}" />
 
 							<TextBlock Padding="5,2" VerticalAlignment="Center"
@@ -255,14 +262,14 @@
 							</TextBlock>
 
 						</StackPanel>
-						<CheckBox IsChecked="{Binding ApplySpacingToComments, Mode=TwoWay}" Content="Apply spacing to comments"/>
 					</StackPanel>
 				</GroupBox>
 
 
 				<!--  ! Empty Lines Compression Controls  -->
-				<GroupBox Grid.Row="1" Width="370" Margin="0,10,0,0" Padding="5,5,0,0"
-				          HorizontalAlignment="Left" BorderThickness="1.5" Header="Compress Empty Lines">
+				<GroupBox Grid.Row="1" Width="370" Margin="0,10,0,0"
+				          Padding="5,5,0,0" HorizontalAlignment="Left" BorderThickness="1.5"
+				          Header="Compress Empty Lines">
 
 					<StackPanel Grid.Row="0" Margin="0,5,0,0">
 

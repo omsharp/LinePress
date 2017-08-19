@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System;
 
+
 namespace LinePress.Options
 {
    public class LinePressSettings : ISettings, INotifyPropertyChanged
@@ -59,12 +60,6 @@ namespace LinePress.Options
               OnPropertyChanged(nameof(SpacingTickValue));
               OnPropertyChanged(nameof(SpacingUnitLabel));
           }
-      }
-
-      public bool PixelSpacingUsed
-      {
-          get { return !emSpacingUsed; }
-          set { SetField(ref emSpacingUsed, !value); }
       }
 
       public double SpacingMaxValue => EmSpacingUsed ? 2d : 20d;
