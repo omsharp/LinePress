@@ -26,6 +26,10 @@
     <RootNamespace>LinePress</RootNamespace>
     <AssemblyName>LinePress</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <!-- The following three lines start the extension with devenv as external program in the experimental hive. see https://stackoverflow.com/a/30714367/2207482 -->
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
@@ -54,6 +58,7 @@
     <Compile Include="LinePressPackage.cs" />
     <Compile Include="LineTransformation\LinePressTransformSource.cs" />
     <Compile Include="LineTransformation\LinePressTransformSourceProvider.cs" />
+    <Compile Include="Options\BoolInverterConverter.cs" />
     <Compile Include="Options\Infrastructure\ISettings.cs" />
     <Compile Include="Options\OptionsPage.cs">
       <SubType>Component</SubType>
@@ -130,6 +135,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>

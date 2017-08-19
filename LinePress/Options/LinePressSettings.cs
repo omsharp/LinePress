@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System;
 
+
 namespace LinePress.Options
 {
    public class LinePressSettings : ISettings, INotifyPropertyChanged
@@ -13,6 +14,10 @@ namespace LinePress.Options
 
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
+
+      private bool emSpacingUsed = false;
+      private double lineSpacing = 0d;
+      private bool applySpacingToComments = false;
 
       private int emptyLineScale = 50;
       private int customTokensScale = 25;
@@ -41,9 +46,39 @@ namespace LinePress.Options
          DeleteTokenCommand = new RelayCommand<string>(CanDeleteToken, t => CustomTokens.Remove(t));
       }
 
-      #endregion
+        #endregion
 
       #region Settings Properties
+
+      [Setting]
+      public bool EmSpacingUsed
+      {
+          get { return emSpacingUsed; }
+          set {
+              SetField(ref emSpacingUsed, value); 
+              OnPropertyChanged(nameof(SpacingMaxValue));
+              OnPropertyChanged(nameof(SpacingTickValue));
+              OnPropertyChanged(nameof(SpacingUnitLabel));
+          }
+      }
+
+      public double SpacingMaxValue => EmSpacingUsed ? 2d : 20d;
+      public double SpacingTickValue => EmSpacingUsed ? 0.1d : 1d;
+      public string SpacingUnitLabel => EmSpacingUsed ? " em" : " pixel";
+
+      [Setting]
+      public double LineSpacing
+      {
+         get { return lineSpacing; }
+         set { SetField(ref lineSpacing, value); }
+      }
+
+      [Setting]
+      public bool ApplySpacingToComments
+      {
+          get { return applySpacingToComments; }
+          set { SetField(ref applySpacingToComments, value); }
+      }
 
       [Setting]
       public bool CompressEmptyLines

@@ -1,4 +1,5 @@
-﻿using LinePress.Options;
+﻿using System.Text.RegularExpressions;
+using LinePress.Options;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 
@@ -6,13 +7,14 @@ namespace LinePress
 {
    public class LinePressTransformSource : ILineTransformSource
    {
-      private readonly LineTransform defaultTransform = new LineTransform(0d, 0d, 1d);
-
+      private LineTransform defaultTransform;
+      private LineTransform spacedTransform;
       private LineTransform emptyLineTransform;
       private LineTransform customTokensTransform;
 
       private readonly IWpfTextView textView;
       private readonly LinePressSettings settings = new LinePressSettings();
+
 
       private LinePressTransformSource(IWpfTextView view)
       {
@@ -21,6 +23,7 @@ namespace LinePress
          SettingsStore.SettingsChanged += OnSettingsChanged;
          SetTransforms();
       }
+
 
       private void OnSettingsChanged()
       {
@@ -35,43 +38,50 @@ namespace LinePress
                                                           ViewRelativePosition.Top);
       }
 
+
       private void SetTransforms()
       {
-         emptyLineTransform = new LineTransform(0d, 0d, (100d - settings.EmptyLineScale) / 100d);
-         customTokensTransform = new LineTransform(0d, 0d, (100d - settings.CustomTokensScale) / 100d);
+         defaultTransform = new LineTransform(0d, 0d, 1d);
+         
+         var bottomSpace = settings.EmSpacingUsed 
+            ? settings.LineSpacing * textView?.TextViewLines?.FirstVisibleLine?.TextHeight ?? 10d
+            : settings.LineSpacing;
+
+         spacedTransform = new LineTransform(0d, bottomSpace, 1d);
+         emptyLineTransform = new LineTransform(0d, bottomSpace, (100d - settings.EmptyLineScale) / 100d);
+         customTokensTransform = new LineTransform(0d, bottomSpace, (100d - settings.CustomTokensScale) / 100d);
       }
+
 
       public static LinePressTransformSource Create(IWpfTextView view)
       {
          return view.Properties.GetOrCreateSingletonProperty(() => new LinePressTransformSource(view));
       }
 
+
       public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
       {
-         if (!settings.CompressEmptyLines && !settings.CompressCustomTokens)
-            return defaultTransform;
-
-         if (line.Length > 100
-            || line.End > line.Start.GetContainingLine().End
-            || !line.IsFirstTextViewLineForSnapshotLine
-            || !line.IsLastTextViewLineForSnapshotLine)
-         {
-            // Ignore long and wrapped lines.
-            return defaultTransform;
-         }
-
          var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
          
-         if (string.IsNullOrWhiteSpace(lineText) && settings.CompressEmptyLines)
-         {
-            return emptyLineTransform;
-         }
-         else if (settings.CustomTokens.Contains(lineText) && settings.CompressCustomTokens)
-         {
-            return customTokensTransform;
-         }
+         var isComment = Regex.Match(lineText, @"^\/\/.*").Success;
+         if (isComment) 
+            return settings.ApplySpacingToComments ? spacedTransform : defaultTransform;
 
-         return defaultTransform;
+         var isLongOrWrappedLine = line.Length > 100 
+                                || !line.IsFirstTextViewLineForSnapshotLine 
+                                || !line.IsLastTextViewLineForSnapshotLine
+                                || line.End > line.Start.GetContainingLine().End;
+         
+         if (isLongOrWrappedLine) return spacedTransform;
+         
+         if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
+            return emptyLineTransform;
+
+         if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
+            return customTokensTransform;
+         
+         return spacedTransform;
       }
+
    }
 }
