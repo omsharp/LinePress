@@ -13,10 +13,13 @@ namespace LinePress.Options
 
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
-
+      
       private int emptyLineScale = 50;
       private int customTokensScale = 25;
       
+      private int lineSpacingPercent = 0;
+      private bool applySpacingToComments = false;
+
       private ObservableCollection<string> customTokens
          = new ObservableCollection<string> { "{", "}" };
 
@@ -78,6 +81,20 @@ namespace LinePress.Options
       {
          get { return ConvertTokensListToString(); }
          set { BuildTokensListFromString(value); }
+      }
+
+      [Setting]
+      public int LineSpacingPercent
+      {
+         get { return lineSpacingPercent; }
+         set { SetField(ref lineSpacingPercent, value); }
+      }
+
+      [Setting]
+      public bool ApplySpacingToComments
+      {
+         get { return applySpacingToComments; }
+         set { SetField(ref applySpacingToComments, value); }
       }
 
       #endregion
