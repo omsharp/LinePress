@@ -74,7 +74,6 @@ namespace LinePress
          return lineSpacingTransform;
       }
 
-
       private bool IsComment(string codeLine) => Regex.Match(codeLine, @"^\/\/.*").Success;
         
       private bool IsLongOrWrapped(ITextViewLine line) => line.Length > 100 
