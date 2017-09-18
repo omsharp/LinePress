@@ -237,7 +237,7 @@
 					<StackPanel Grid.Row="0" Margin="0,5,0,0">
 
 						<!--  ! Line Spacing Slider  -->
-						<StackPanel Margin="20,10" IsEnabled="{Binding ElementName=CompressEmptyLinesToggle, Path=IsChecked}" Orientation="Horizontal">
+						<StackPanel Margin="20,10" Orientation="Horizontal">
 							<Slider x:Name="LineSpacingPercentToAddSlider" Width="240" Height="30"
 							        IsSnapToTickEnabled="True" Maximum="100" Minimum="0"
 							        TickFrequency="5" TickPlacement="Both"
@@ -353,7 +353,7 @@
 						<!--  ! Custom Tokens Compression Scale  -->
 						<StackPanel Margin="20,5,20,10" IsEnabled="{Binding IsChecked, ElementName=CompressCustomTokensToggle}" Orientation="Horizontal">
 							<Slider x:Name="CustomTokensCompressionRateSlider" Width="240" Height="30"
-							        IsSnapToTickEnabled="True" Maximum="95" Minimum="5"
+							        IsSnapToTickEnabled="True" Maximum="95" Minimum="0"
 							        TickFrequency="5" TickPlacement="Both"
 							        Value="{Binding CustomTokensScale, Mode=TwoWay}" />
 
