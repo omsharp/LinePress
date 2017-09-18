@@ -1,4 +1,7 @@
-﻿using LinePress.Options;
+﻿using System;
+using System.Text.RegularExpressions;
+using LinePress.Options;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 
@@ -10,6 +13,7 @@ namespace LinePress
 
       private LineTransform emptyLineTransform;
       private LineTransform customTokensTransform;
+      private LineTransform lineSpacingTransform;
 
       private readonly IWpfTextView textView;
       private readonly LinePressSettings settings = new LinePressSettings();
@@ -37,8 +41,13 @@ namespace LinePress
 
       private void SetTransforms()
       {
-         emptyLineTransform = new LineTransform(0d, 0d, (100d - settings.EmptyLineScale) / 100d);
-         customTokensTransform = new LineTransform(0d, 0d, (100d - settings.CustomTokensScale) / 100d);
+         var lineHeight = textView?.TextViewLines?.FirstVisibleLine?.TextHeight ?? 10d;
+         var lineSpacing = (double)settings.LineSpacingPercent;
+         var pixelSpace = settings.LineSpacingPercent != 0 ? Math.Round(lineHeight * lineSpacing / 200d) : 0d;
+         
+         lineSpacingTransform = new LineTransform(pixelSpace, pixelSpace, 1d);
+         emptyLineTransform = new LineTransform(0d, 0d, EmptyLineScale);
+         customTokensTransform = new LineTransform(0d, 0d, CustomTokensScale);
       }
 
       public static LinePressTransformSource Create(IWpfTextView view)
@@ -48,30 +57,34 @@ namespace LinePress
 
       public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
       {
-         if (!settings.CompressEmptyLines && !settings.CompressCustomTokens)
-            return defaultTransform;
-
-         if (line.Length > 100
-            || line.End > line.Start.GetContainingLine().End
-            || !line.IsFirstTextViewLineForSnapshotLine
-            || !line.IsLastTextViewLineForSnapshotLine)
-         {
-            // Ignore long and wrapped lines.
-            return defaultTransform;
-         }
-
          var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
          
-         if (string.IsNullOrWhiteSpace(lineText) && settings.CompressEmptyLines)
-         {
+         if (IsComment(lineText)) 
+            return settings.ApplySpacingToComments ? lineSpacingTransform : defaultTransform;
+         
+         if (IsLongOrWrapped(line)) 
+            return lineSpacingTransform;
+         
+         if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
             return emptyLineTransform;
-         }
-         else if (settings.CustomTokens.Contains(lineText) && settings.CompressCustomTokens)
-         {
+         
+         if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
             return customTokensTransform;
-         }
-
-         return defaultTransform;
+         
+         return lineSpacingTransform;
       }
+
+
+      private bool IsComment(string codeLine) => Regex.Match(codeLine, @"^\/\/.*").Success;
+        
+      private bool IsLongOrWrapped(ITextViewLine line) => line.Length > 100 
+                                                       || !line.IsFirstTextViewLineForSnapshotLine 
+                                                       || !line.IsLastTextViewLineForSnapshotLine
+                                                       || line.End > line.Start.GetContainingLine().End;
+
+      private double CustomTokensScale => (100d - settings.CustomTokensScale) / 100d;
+        
+      private double EmptyLineScale => (100d - settings.EmptyLineScale) / 100d;
+
    }
 }
