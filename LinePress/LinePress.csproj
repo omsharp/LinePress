@@ -26,11 +26,13 @@
     <RootNamespace>LinePress</RootNamespace>
     <AssemblyName>LinePress</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <!-- The following three lines start the extension with devenv as external program in the experimental hive. see https://stackoverflow.com/a/30714367/2207482 
-	  <StartAction>Program</StartAction>
+
+    <!-- Start the extension with devenv as external program in the experimental hive.-->
+    <StartAction>Program</StartAction>
 	  <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
 	  <StartArguments>/rootsuffix Exp</StartArguments>
-  -->
+    <!-- Ends here-->
+  
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
