@@ -1,9 +1,8 @@
 # Line Press
 
 
-With Line Press you can control line height, 
-and compress empty or any unimportant lines. 
-More code. No cram.
+Increase line height to prevent code cram, and compress empty/unimportant 
+lines to view more code on screen. Have the best of both worlds.
 
 <!-- Replace this badge with your own-->
 [![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/omsharp/linepress)
@@ -32,4 +31,4 @@ Download the latest build from [VSIX Gallery](http://vsixgallery.com/extension/1
 
 ##
 **License**
-[Apache 2.0](LICENSE
+[Apache 2.0](LICENSE)
