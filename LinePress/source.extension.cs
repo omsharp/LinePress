@@ -5,14 +5,14 @@
 // ------------------------------------------------------------------------------
 namespace LinePress
 {
-   static class Vsix
-   {
-      public const string Id = "13d97f3e-75e2-4715-a444-715b5f39f0a4";
-      public const string Name = "Line Press";
-      public const string Description = @"Have the best of both worlds. More code lines on screen without giving up your comfortable whitespace.";
-      public const string Language = "en-US";
-      public const string Version = "2.2";
-      public const string Author = "Omar Rwemi";
-      public const string Tags = "compress, empty, line, curly, brace, height, more, vertical, space";
-   }
+    static class Vsix
+    {
+        public const string Id = "13d97f3e-75e2-4715-a444-715b5f39f0a4";
+        public const string Name = "Line Press";
+        public const string Description = @"Control the line-height of code lines, and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.";
+        public const string Language = "en-US";
+        public const string Version = "2.3";
+        public const string Author = "Omar Rwemi";
+        public const string Tags = "line-height,line-space, compress, empty, line, curly, brace, height, more, vertical, space, productivity";
+    }
 }

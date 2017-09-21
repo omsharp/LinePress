@@ -121,7 +121,7 @@
     <value>Line Press</value>
   </data>
   <data name="112" xml:space="preserve">
-    <value>Have the best of both worlds. More code lines on screen without giving up your comfortable whitespace.</value>
+    <value>Control the line-height of code lines, and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="400" type="System.Resources.ResXFileRef, System.Windows.Forms">

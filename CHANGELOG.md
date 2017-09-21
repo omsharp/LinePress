@@ -1,6 +1,12 @@
 
 ##Changelog
 
+### 2.3
+
+**2017-09-22
+
+- [x] Add the ability to increase line-height of uncompressed lines.
+
 ### 2.2
 
 **2017-05-13
@@ -24,5 +30,5 @@
 **2017-04-3
 
 - [x] Initial release.
-- [x] Control the height of empty lines.
-- [x] Control the height of lines that contains nothing but curly braces.
+- [x] Compress empty lines.
+- [x] Compress lines that contains nothing but curly braces.
