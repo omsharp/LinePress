@@ -3,11 +3,11 @@
   <Metadata>
     <Identity Id="13d97f3e-75e2-4715-a444-715b5f39f0a4" Version="2.3" Language="en-US" Publisher="Omar Rwemi" />
     <DisplayName>Line Press</DisplayName>
-    <Description xml:space="preserve">Control the line height and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.</Description>
+    <Description xml:space="preserve">Control the line-height of code lines, and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.</Description>
     <License >Resources\LICENSE</License>
     <Icon>Resources\Icon.png</Icon>
     <PreviewImage>Resources\PreviewImage.png</PreviewImage>
-    <Tags>compress, empty, line, curly, brace, height, more, vertical, space</Tags>
+    <Tags>line-height,line-space, compress, empty, line, curly, brace, height, more, vertical, space, productivity</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.Pro" />
