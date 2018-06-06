@@ -123,8 +123,8 @@ namespace LinePress.Options
       private void BuildTokensListFromString(string str)
       {
          customTokens.Clear();
-
-         foreach (var token in str.Split(null))
+         var tokens = str.Split(null);
+         foreach (var token in tokens)
             customTokens.Add(token);
       }
 
