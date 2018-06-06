@@ -6,82 +6,82 @@ using Microsoft.VisualStudio.Text.Formatting;
 
 namespace LinePress
 {
-    public class LinePressTransformSource : ILineTransformSource
-    {
-        private readonly LineTransform defaultTransform = new LineTransform(0d, 0d, 1d);
+   public class LinePressTransformSource : ILineTransformSource
+   {
+      private readonly LineTransform defaultTransform = new LineTransform(0d, 0d, 1d);
 
-        private LineTransform emptyLineTransform;
-        private LineTransform customTokensTransform;
-        private LineTransform lineSpacingTransform;
+      private LineTransform emptyLineTransform;
+      private LineTransform customTokensTransform;
+      private LineTransform lineSpacingTransform;
 
-        private readonly IWpfTextView textView;
-        private readonly LinePressSettings settings = new LinePressSettings();
+      private readonly IWpfTextView textView;
+      private readonly LinePressSettings settings = new LinePressSettings();
 
-        private LinePressTransformSource(IWpfTextView view)
-        {
-            textView = view;
-            SettingsStore.LoadSettings(settings);
-            SettingsStore.SettingsChanged += OnSettingsChanged;
-            SetTransforms();
-        }
+      private LinePressTransformSource(IWpfTextView view)
+      {
+         textView = view;
+         SettingsStore.LoadSettings(settings);
+         SettingsStore.SettingsChanged += OnSettingsChanged;
+         SetTransforms();
+      }
 
-        public static LinePressTransformSource Create(IWpfTextView view)
-        {
-            return view.Properties.GetOrCreateSingletonProperty(() => new LinePressTransformSource(view));
-        }
+      public static LinePressTransformSource Create(IWpfTextView view)
+      {
+         return view.Properties.GetOrCreateSingletonProperty(() => new LinePressTransformSource(view));
+      }
 
-        public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
-        {
-            var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
-            
-            if (IsComment(lineText))
-                return settings.ApplySpacingToComments ? lineSpacingTransform : defaultTransform;
+      public LineTransform GetLineTransform(ITextViewLine line, double yPosition, ViewRelativePosition placement)
+      {
+         var lineText = line.Snapshot.GetText(line.Start, line.Length).Trim();
 
-            if (IsLongOrWrapped(line))
-                return lineSpacingTransform;
+         if (IsComment(lineText))
+            return settings.ApplySpacingToComments ? lineSpacingTransform : defaultTransform;
 
-            if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
-                return emptyLineTransform;
-
-            if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
-                return customTokensTransform;
-
+         if (IsLongOrWrapped(line))
             return lineSpacingTransform;
-        }
 
-        private bool IsComment(string codeLine) => Regex.Match(codeLine, @"^\/\/.*").Success;
+         if (settings.CompressEmptyLines && string.IsNullOrWhiteSpace(lineText))
+            return emptyLineTransform;
 
-        private bool IsLongOrWrapped(ITextViewLine line) => line.Length > 100
-                                                         || !line.IsFirstTextViewLineForSnapshotLine
-                                                         || !line.IsLastTextViewLineForSnapshotLine
-                                                         || line.End > line.Start.GetContainingLine().End;
+         if (settings.CompressCustomTokens && settings.CustomTokens.Contains(lineText))
+            return customTokensTransform;
 
-        private double CustomTokensScale => (100d - settings.CustomTokensScale) / 100d;
+         return lineSpacingTransform;
+      }
 
-        private double EmptyLineScale => (100d - settings.EmptyLineScale) / 100d;
+      private bool IsComment(string codeLine) => Regex.Match(codeLine, @"^\/\/.*").Success;
 
-        private void SetTransforms()
-        {
-            var lineHeight = textView?.TextViewLines?.FirstVisibleLine?.TextHeight ?? 10d;
-            var lineSpacing = (double)settings.LineSpacingPercent;
-            var pixelSpace = settings.LineSpacingPercent != 0 ? Math.Round(lineHeight * lineSpacing / 200d) : 0d;
+      private bool IsLongOrWrapped(ITextViewLine line) => line.Length > 100
+                                                       || !line.IsFirstTextViewLineForSnapshotLine
+                                                       || !line.IsLastTextViewLineForSnapshotLine
+                                                       || line.End > line.Start.GetContainingLine().End;
 
-            lineSpacingTransform = new LineTransform(pixelSpace, pixelSpace, 1d);
-            emptyLineTransform = new LineTransform(0d, 0d, EmptyLineScale);
-            customTokensTransform = new LineTransform(0d, 0d, CustomTokensScale);
-        }
+      private double CustomTokensScale => (100d - settings.CustomTokensScale) / 100d;
 
-        private void OnSettingsChanged()
-        {
-            SettingsStore.LoadSettings(settings);
+      private double EmptyLineScale => (100d - settings.EmptyLineScale) / 100d;
 
-            SetTransforms();
+      private void SetTransforms()
+      {
+         var lineHeight = textView?.TextViewLines?.FirstVisibleLine?.TextHeight ?? 10d;
+         var lineSpacing = (double)settings.LineSpacingPercent;
+         var pixelSpace = settings.LineSpacingPercent != 0 ? Math.Round(lineHeight * lineSpacing / 200d) : 0d;
 
-            var firstLine = textView.TextViewLines.FirstVisibleLine;
+         lineSpacingTransform = new LineTransform(pixelSpace, pixelSpace, 1d);
+         emptyLineTransform = new LineTransform(0d, 0d, EmptyLineScale);
+         customTokensTransform = new LineTransform(0d, 0d, CustomTokensScale);
+      }
 
-            textView.DisplayTextLineContainingBufferPosition(firstLine.Start,
-                                                             firstLine.Top - textView.ViewportTop,
-                                                             ViewRelativePosition.Top);
-        }
-    }
+      private void OnSettingsChanged()
+      {
+         SettingsStore.LoadSettings(settings);
+
+         SetTransforms();
+
+         var firstLine = textView.TextViewLines.FirstVisibleLine;
+
+         textView.DisplayTextLineContainingBufferPosition(firstLine.Start,
+                                                          firstLine.Top - textView.ViewportTop,
+                                                          ViewRelativePosition.Top);
+      }
+   }
 }

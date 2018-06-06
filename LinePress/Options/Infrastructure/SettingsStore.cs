@@ -47,35 +47,29 @@ namespace LinePress.Options
 
         private static bool SaveSettingsIntoStore(ISettings settings)
         {
-            var saved = false;
-
             foreach (var prop in GetProperties(settings))
             {
                 switch (prop.GetValue(settings))
                 {
                     case bool b:
                         store.SetBoolean(settings.Key, prop.Name, b);
-                        saved = true;
-                        break;
+                        return true;
 
                     case int i:
                         store.SetInt32(settings.Key, prop.Name, i);
-                        saved = true;
-                        break;
+                        return true;
 
                     case double d:
                         store.SetString(settings.Key, prop.Name, d.ToString());
-                        saved = true;
-                        break;
+                        return true;
 
                     case string s:
                         store.SetString(settings.Key, prop.Name, s);
-                        saved = true;
-                        break;
+                        return true;
                 }
             }
 
-            return saved;
+            return false;
         }
 
         private static void LoadSettingsFromStore(ISettings settings)
