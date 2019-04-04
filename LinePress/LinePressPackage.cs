@@ -8,7 +8,7 @@ using System.Windows;
 namespace LinePress
 {
    [ProvideOptionPage(typeof(OptionsPage), "Line Press", "Options", 0, 0, true)]
-   [PackageRegistration(UseManagedResourcesOnly = true)]
+   [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading =true)]
    [InstalledProductRegistration("#110", "#112", Vsix.Id, IconResourceID = 400)]
    [Guid(PackageGuidString)]
    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
