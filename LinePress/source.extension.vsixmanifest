@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="13d97f3e-75e2-4715-a444-715b5f39f0a4" Version="2.3" Language="en-US" Publisher="Omar Rwemi" />
-    <DisplayName>Line Press</DisplayName>
-    <Description xml:space="preserve">Control the line-height of code lines, and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.</Description>
-    <License >Resources\LICENSE</License>
-    <Icon>Resources\Icon.png</Icon>
-    <PreviewImage>Resources\PreviewImage.png</PreviewImage>
-    <Tags>line-height,line-space, compress, empty, line, curly, brace, height, more, vertical, space, productivity</Tags>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.Pro" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
-  </Dependencies>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-  </Assets>
+    <Metadata>
+        <Identity Id="13d97f3e-75e2-4715-a444-715b5f39f0a4" Version="2.3" Language="en-US" Publisher="Omar Rwemi" />
+        <DisplayName>Line Press</DisplayName>
+        <Description xml:space="preserve">Control the line-height of code lines, and compress empty or any unimportant lines. Have best of both worlds, more code view with no cram.</Description>
+        <License >Resources\LICENSE</License>
+        <Icon>Resources\Icon.png</Icon>
+        <PreviewImage>Resources\PreviewImage.png</PreviewImage>
+        <Tags>line-height,line-space, compress, empty, line, curly, brace, height, more, vertical, space, productivity</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Version="[14.0, 17.0)" Id="Microsoft.VisualStudio.Pro" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
+    </Dependencies>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
 </PackageManifest>
