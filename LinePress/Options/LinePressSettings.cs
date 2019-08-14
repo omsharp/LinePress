@@ -13,10 +13,10 @@ namespace LinePress.Options
 
       private bool compressEmptyLines = true;
       private bool compressCustomTokens = true;
-      
+
       private int emptyLineScale = 50;
       private int customTokensScale = 25;
-      
+
       private int lineSpacingPercent = 0;
       private bool applySpacingToComments = false;
 
@@ -137,7 +137,7 @@ namespace LinePress.Options
             stringBuilder.Append(' ');
             stringBuilder.Append(customTokens[i]);
          }
-         
+
          return stringBuilder.ToString();
       }
 

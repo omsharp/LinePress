@@ -29,7 +29,7 @@ namespace LinePress.Options
       {
          if (e.ApplyBehavior == ApplyKind.Apply)
             SettingsStore.SaveSettings(pageControl.Settings);
-         
+
          base.OnApply(e);
       }
 
